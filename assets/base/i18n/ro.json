@@ -750,7 +750,7 @@
     "settings.about.server.version.desc": "",
     "settings.about.database.schema": "",
     "settings.about.database": "",
-    "settings.about.copyright": "",
+    "settings.about.copyright": "© 2022 ООО Платрум, Mattermost Inc.",
     "settings.about": "",
     "settings_display.timezone.select": "",
     "settings_display.timezone.off": "",

@@ -343,19 +343,6 @@ const LoginForm = ({config, extra, serverDisplayName, launchError, launchType, l
                 endAdornment={endAdornment}
             />
 
-            {(emailEnabled || usernameEnabled) && (
-                <Button
-                    onPress={onPressForgotPassword}
-                    containerStyle={[styles.forgotPasswordBtn, error ? styles.forgotPasswordError : undefined]}
-                    testID='login_form.forgot_password.button'
-                >
-                    <FormattedText
-                        id='login.forgot'
-                        defaultMessage='Forgot your password?'
-                        style={styles.forgotPasswordTxt}
-                    />
-                </Button>
-            )}
             {renderProceedButton}
         </View>
     );

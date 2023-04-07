@@ -851,7 +851,7 @@
     "snack.bar.remove.user": "1 عضو از کانال حذف شد",
     "share_extension.file_limit.multiple": "هر پرونده باید کمتر از {size} باشد",
     "terms_of_service.terms_declined.title": "شما باید شرایط استفاده از خدمت را قبول کنید",
-    "settings.about.copyright": "حق نشر 2015-{currentYear} برای شرکت مترموست محفوظ است",
+    "settings.about.copyright": "© 2022 ООО Платрум, Mattermost Inc.",
     "screen.saved_messages.subtitle": "تمام پیام‌هایی که برای دنبال‌کردن، ذخیره کرده‌اید",
     "mobile.direct_message.error": "ما نتوانستیم یک گفت‌وگوی شخصی با {displayName} باز کنیم.",
     "channel_modal.purposeEx": "کانالی برای تبادل پیشنهادات و انتقادات",
