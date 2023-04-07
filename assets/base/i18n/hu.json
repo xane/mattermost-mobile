@@ -418,7 +418,7 @@
     "settings.advanced.delete_message.confirmation": "",
     "settings.advanced.delete_data": "",
     "settings.advanced.delete": "",
-    "settings.about.copyright": "",
+    "settings.about.copyright": "© 2022 ООО Платрум, Mattermost Inc.",
     "settings_display.crt.label": "",
     "settings_display.crt.desc": "",
     "screen.mentions.title": "",

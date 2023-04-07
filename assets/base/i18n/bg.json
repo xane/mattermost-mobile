@@ -797,7 +797,7 @@
     "user.edit_profile.email.auth_service": "",
     "user_profile.custom_status": "",
     "unsupported_server.title": "",
-    "settings.about.copyright": "",
+    "settings.about.copyright": "© 2022 ООО Платрум, Mattermost Inc.",
     "settings_display.timezone.select": "",
     "snack.bar.mute.channel": "",
     "settings.about.serverVersionNoBuild": "",

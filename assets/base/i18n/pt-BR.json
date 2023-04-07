@@ -685,7 +685,7 @@
     "settings.notice_mobile_link": "",
     "settings.link.error.title": "",
     "settings.about.server.version.desc": "",
-    "settings.about.copyright": "",
+    "settings.about.copyright": "© 2022 ООО Платрум, Mattermost Inc.",
     "settings.about.build": "",
     "server_list.push_proxy_error": "",
     "select_team.title": "",

@@ -602,7 +602,7 @@
     "settings.about.server.version.desc": "",
     "notification_settings.auto_responder.to.enable": "",
     "mobile.calls_leave_call": "",
-    "settings.about.copyright": "",
+    "settings.about.copyright": "© 2022 ООО Платрум, Mattermost Inc.",
     "mobile.calls_end_msg_channel": "",
     "unsupported_server.message": "",
     "mobile.login_options.select_option": "",
