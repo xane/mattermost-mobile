@@ -47,9 +47,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     fullWidth: {
         width: '100%',
     },
-    error: {
-        marginBottom: 18,
-    },
     chooseText: {
         alignSelf: 'flex-start',
         color: changeOpacity(theme.centerChannelColor, 0.64),
@@ -166,7 +163,7 @@ const ServerForm = ({
 
     return (
         <View style={styles.formContainer}>
-            <View style={[styles.fullWidth, urlError?.length ? styles.error : undefined]}>
+            <View style={styles.fullWidth}>
                 <FloatingTextInput
                     autoCorrect={false}
                     autoCapitalize={'none'}
@@ -193,6 +190,29 @@ const ServerForm = ({
                     value={url}
                 />
             </View>
+            <View style={styles.fullWidth}>
+                <FloatingTextInput
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
+                    enablesReturnKeyAutomatically={true}
+                    error={displayNameError}
+                    label={formatMessage({
+                        id: 'mobile.components.select_server_view.displayName',
+                        defaultMessage: 'Display Name',
+                    })}
+                    onBlur={onBlur}
+                    onChangeText={handleDisplayNameTextChanged}
+                    onFocus={onFocus}
+                    onSubmitEditing={onConnect}
+                    ref={displayNameRef}
+                    returnKeyType='done'
+                    spellCheck={false}
+                    testID='server_form.server_display_name.input'
+                    theme={theme}
+                    value={displayName}
+                />
+            </View>
+            {!displayNameError &&
             <FormattedText
                 defaultMessage={'Choose a display name for your server'}
                 id={'mobile.components.select_server_view.hostHelp'}
