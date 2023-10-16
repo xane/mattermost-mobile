@@ -430,6 +430,7 @@ export async function verifyPushProxy(serverUrl: string) {
     }
 }
 
+// LOL
 export async function handleEntryAfterLoadNavigation(
     serverUrl: string,
     teamMembers: TeamMembership[],
