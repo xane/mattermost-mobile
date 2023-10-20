@@ -79,6 +79,7 @@ const ChannelInfo = ({
     useNavButtonPressed(closeButtonId, componentId, onPressed, [onPressed]);
     useAndroidHardwareBackHandler(componentId, onPressed);
 
+    // LOL
     return (
         <SafeAreaView
             edges={edges}
@@ -115,7 +116,9 @@ const ChannelInfo = ({
                 <View style={styles.separator}/>
                 {type === General.GM_CHANNEL &&
                 <>
-                    <ConvertToChannelLabel/>
+                    <ConvertToChannelLabel
+                        channelId={channelId}
+                    />
                     <View style={styles.separator}/>
                 </>
                 }
