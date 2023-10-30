@@ -114,6 +114,7 @@ const ChannelInfo = ({
                     canManageSettings={canManageSettings}
                 />
                 <View style={styles.separator}/>
+                {/* LOL hide this option for guest users */}
                 {type === General.GM_CHANNEL &&
                 <>
                     <ConvertToChannelLabel
