@@ -120,6 +120,7 @@ const enhanced = withObservables([], ({serverUrl, database}: Props) => {
         canManageMembers,
         isCRTEnabled: observeIsCRTEnabled(database),
         canManageSettings,
+        currentUser,
     };
 });
 
