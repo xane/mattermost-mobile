@@ -113,6 +113,11 @@ const enhanced = withObservables([], ({serverUrl, database}: Props) => {
         distinctUntilChanged(),
     );
 
+    const isGuestUser = currentUser.pipe(
+        switchMap((u) => (u ? of$(u.isGuest) : of$(false))),
+        distinctUntilChanged(),
+    );
+
     return {
         type,
         canEnableDisableCalls,
@@ -120,7 +125,7 @@ const enhanced = withObservables([], ({serverUrl, database}: Props) => {
         canManageMembers,
         isCRTEnabled: observeIsCRTEnabled(database),
         canManageSettings,
-        currentUser,
+        isGuestUser,
     };
 });
 
