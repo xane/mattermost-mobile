@@ -35,6 +35,7 @@ type Props = {
     isCRTEnabled: boolean;
     canManageSettings: boolean;
     isGuestUser: boolean;
+    isConvertGMFeatureAvailable: boolean;
 }
 
 const edges: Edge[] = ['bottom', 'left', 'right'];
@@ -65,6 +66,7 @@ const ChannelInfo = ({
     canManageMembers,
     canManageSettings,
     isGuestUser,
+    isConvertGMFeatureAvailable,
 }: Props) => {
     const theme = useTheme();
     const serverUrl = useServerUrl();
@@ -81,7 +83,7 @@ const ChannelInfo = ({
     useNavButtonPressed(closeButtonId, componentId, onPressed, [onPressed]);
     useAndroidHardwareBackHandler(componentId, onPressed);
 
-    const convertGMOptionAvailable = type === General.GM_CHANNEL && !isGuestUser;
+    const convertGMOptionAvailable = isConvertGMFeatureAvailable && type === General.GM_CHANNEL && !isGuestUser;
 
     return (
         <SafeAreaView
