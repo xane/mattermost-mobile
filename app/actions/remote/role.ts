@@ -1,9 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import {General} from '@constants';
 import DatabaseManager from '@database/manager';
 import NetworkManager from '@managers/network_manager';
 import {queryRoles} from '@queries/servers/role';
+import {getFullErrorMessage} from '@utils/errors';
+import {logDebug} from '@utils/log';
 
 import {forceLogoutIfNecessary} from './session';
 
@@ -17,44 +20,36 @@ export const fetchRolesIfNeeded = async (serverUrl: string, updatedRoles: string
         return {roles: []};
     }
 
-    let client;
     try {
-        client = NetworkManager.getClient(serverUrl);
-    } catch (error) {
-        return {error};
-    }
+        const client = NetworkManager.getClient(serverUrl);
+        const {database, operator} = DatabaseManager.getServerDatabaseAndOperator(serverUrl);
 
-    let database;
-    let operator;
-    try {
-        const result = DatabaseManager.getServerDatabaseAndOperator(serverUrl);
-        database = result.database;
-        operator = result.operator;
-    } catch (e) {
-        return {error: `${serverUrl} database not found`};
-    }
+        let newRoles;
+        if (force) {
+            newRoles = updatedRoles;
+        } else {
+            const existingRoles = await queryRoles(database).fetch();
 
-    let newRoles;
-    if (force) {
-        newRoles = updatedRoles;
-    } else {
-        const existingRoles = await queryRoles(database).fetch();
+            const roleNames = new Set(existingRoles.map((role) => {
+                return role.name;
+            }));
 
-        const roleNames = new Set(existingRoles.map((role) => {
-            return role.name;
-        }));
+            newRoles = updatedRoles.filter((newRole) => {
+                return !roleNames.has(newRole);
+            });
+        }
 
-        newRoles = updatedRoles.filter((newRole) => {
-            return !roleNames.has(newRole);
-        });
-    }
+        if (!newRoles.length) {
+            return {roles: []};
+        }
 
-    if (!newRoles.length) {
-        return {roles: []};
-    }
+        const getRolesRequests = [];
+        for (let i = 0; i < newRoles.length; i += General.MAX_GET_ROLES_BY_NAMES) {
+            const chunk = newRoles.slice(i, i + General.MAX_GET_ROLES_BY_NAMES);
+            getRolesRequests.push(client.getRolesByNames(chunk));
+        }
 
-    try {
-        const roles = await client.getRolesByNames(newRoles);
+        const roles = (await Promise.all(getRolesRequests)).flat();
         if (!fetchOnly) {
             await operator.handleRole({
                 roles,
@@ -64,7 +59,8 @@ export const fetchRolesIfNeeded = async (serverUrl: string, updatedRoles: string
 
         return {roles};
     } catch (error) {
-        forceLogoutIfNecessary(serverUrl, error as ClientErrorProps);
+        logDebug('error on fetchRolesIfNeeded', getFullErrorMessage(error));
+        forceLogoutIfNecessary(serverUrl, error);
         return {error};
     }
 };

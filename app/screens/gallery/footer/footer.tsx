@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {DeviceEventEmitter, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {DeviceEventEmitter, type StyleProp, StyleSheet, View, type ViewStyle} from 'react-native';
 import Animated from 'react-native-reanimated';
-import {SafeAreaView, Edge, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView, type Edge, useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Events} from '@constants';
 import {GALLERY_FOOTER_HEIGHT} from '@constants/gallery';
@@ -35,6 +35,9 @@ type Props = {
     post?: PostModel;
     style: StyleProp<ViewStyle>;
     teammateNameDisplay: string;
+    hasCaptions: boolean;
+    captionEnabled: boolean;
+    onCaptionsPress: () => void;
 }
 
 const AnimatedSafeAreaView = Animated.createAnimatedComponent(SafeAreaView);
@@ -58,6 +61,7 @@ const Footer = ({
     author, canDownloadFiles, channelName, currentUserId,
     enablePostIconOverride, enablePostUsernameOverride, enablePublicLink,
     hideActions, isDirectChannel, item, post, style, teammateNameDisplay,
+    hasCaptions, captionEnabled, onCaptionsPress,
 }: Props) => {
     const showActions = !hideActions && Boolean(item.id) && !item.id?.startsWith('uid');
     const [action, setAction] = useState<GalleryAction>('none');
@@ -142,6 +146,9 @@ const Footer = ({
                     onCopyPublicLink={handleCopyLink}
                     onDownload={handleDownload}
                     onShare={handleShare}
+                    hasCaptions={hasCaptions}
+                    captionEnabled={captionEnabled}
+                    onCaptionsPress={onCaptionsPress}
                 />
                 }
             </View>
