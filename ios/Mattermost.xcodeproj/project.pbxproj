@@ -1935,7 +1935,6 @@
 					"$(SRCROOT)/UploadAttachments/UploadAttachments",
 				);
 				INFOPLIST_FILE = Mattermost/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1980,7 +1979,6 @@
 					"$(SRCROOT)/UploadAttachments/UploadAttachments",
 				);
 				INFOPLIST_FILE = Mattermost/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

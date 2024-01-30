@@ -350,29 +350,31 @@ const About = ({componentId, config, license}: AboutProps) => {
                 <View style={styles.hashContainer}>
                     <View>
                         <FormattedText
-                            id={t('settings.notice_text')}
-                            defaultMessage='Platrum Chat is made possible by the open source software used in our {platform} and {mobile}.'
-                            style={styles.footerText}
-                            values={{
-                                platform: (
-                                    <FormattedText
-                                        defaultMessage='server'
-                                        id={t('settings.notice_platform_link')}
-                                        onPress={handlePlatformNotice}
-                                        style={styles.noticeLink}
-                                    />
-                                ),
-                                mobile: (
-                                    <FormattedText
-                                        defaultMessage='mobile apps'
-                                        id={t('settings.notice_mobile_link')}
-                                        onPress={handleMobileNotice}
-                                        style={[styles.noticeLink, {marginLeft: 5}]}
-                                    />
-                                ),
-                            }}
-                            testID='about.notice_text'
+                            defaultMessage='Build Hash:'
+                            id={t('about.hash')}
+                            style={styles.footerTitleText}
+                            testID='about.build_hash.title'
                         />
+                        <Text
+                            style={styles.footerText}
+                            testID='about.build_hash.value'
+                        >
+                            {config.BuildHash}
+                        </Text>
+                    </View>
+                    <View>
+                        <FormattedText
+                            defaultMessage='EE Build Hash:'
+                            id={t('about.hashee')}
+                            style={styles.footerTitleText}
+                            testID='about.build_hash_enterprise.title'
+                        />
+                        <Text
+                            style={styles.footerText}
+                            testID='about.build_hash_enterprise.value'
+                        >
+                            {config.BuildHashEnterprise}
+                        </Text>
                     </View>
                 </View>
                 <View style={{marginBottom: 20}}>
