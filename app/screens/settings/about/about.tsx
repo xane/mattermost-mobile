@@ -1,25 +1,21 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import Clipboard from '@react-native-clipboard/clipboard';
 import React, {useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
-import {Alert, Text, Image, View} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 import Config from '@assets/config.json';
-import Button from '@components/button';
 import CompassIcon from '@components/compass_icon';
 import FormattedText from '@components/formatted_text';
 import SettingContainer from '@components/settings/container';
+import SettingSeparator from '@components/settings/separator';
 import AboutLinks from '@constants/about_links';
-import {SNACK_BAR_TYPE} from '@constants/snack_bar';
 import {useTheme} from '@context/theme';
 import useAndroidHardwareBackHandler from '@hooks/android_back_handler';
 import {t} from '@i18n';
 import {popTopScreen} from '@screens/navigation';
-import {buttonBackgroundStyle, buttonTextStyle} from '@utils/buttonStyles';
-import {showSnackBar} from '@utils/snack_bar';
 import {preventDoubleTap} from '@utils/tap';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
@@ -31,7 +27,6 @@ import Title from './title';
 import TosPrivacyContainer from './tos_privacy';
 
 import type {AvailableScreens} from '@typings/screens/navigation';
-import { Dimensions } from 'react-native';
 
 const MATTERMOST_BUNDLE_IDS = ['com.mattermost.rnbeta', 'com.mattermost.rn'];
 
@@ -85,7 +80,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         footerText: {
             color: changeOpacity(theme.centerChannelColor, 0.64),
             ...typography('Body', 50),
-            marginVertical: 10,
+            marginBottom: 10,
         },
         copyrightText: {
             marginBottom: 0,
@@ -96,17 +91,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         },
         group: {
             flexDirection: 'row',
-        },
-        copyInfoButtonContainer: {
-            width: 120,
-            marginTop: 10,
-            position: 'relative',
-        },
-        thinLine: {
-            height: 0.2,
-            backgroundColor: changeOpacity(theme.centerChannelColor, 0.2),
-            alignSelf: 'stretch',
-            marginVertical: 20,
         },
     };
 });
@@ -162,68 +146,60 @@ const About = ({componentId, config, license}: AboutProps) => {
         const buildNumber = config.BuildNumber;
         const version = config.Version;
 
+        let id = t('settings.about.server.version.value');
+        let defaultMessage = '{version} (Build {number})';
+        let values: {version: string; number?: string} = {
+            version,
+            number: buildNumber,
+        };
+
         if (buildNumber === version) {
-            return version;
+            id = t('settings.about.serverVersionNoBuild');
+            defaultMessage = '{version}';
+            values = {
+                version,
+                number: undefined,
+            };
         }
 
-        return intl.formatMessage({id: 'settings.about.server.version.value', defaultMessage: '{version} (Build {buildNumber})'}, {version, buildNumber});
-    }, [config, intl]);
+        return {
+            id, defaultMessage, values,
+        };
+    }, [config]);
 
-    const close = useCallback(() => {
+    useAndroidHardwareBackHandler(componentId, () => {
         popTopScreen(componentId);
-    }, [componentId]);
-
-    useAndroidHardwareBackHandler(componentId, close);
-
-    const copyToClipboard = useCallback(
-        () => {
-            const appVersion = intl.formatMessage({id: 'settings.about.app.version', defaultMessage: 'App Version: {version} (Build {number})'}, {version: DeviceInfo.getVersion(), number: DeviceInfo.getBuildNumber()});
-            const buildNumber = config.BuildNumber;
-            const version = config.Version;
-            const server = buildNumber === version ? intl.formatMessage({id: 'settings.about.server.version.noBuild', defaultMessage: 'Server Version: {version}'}, {version}) : intl.formatMessage({id: 'settings.about.server.version', defaultMessage: 'Server Version: {version} (Build {buildNumber})'}, {version, buildNumber});
-            const database = intl.formatMessage({id: 'settings.about.database', defaultMessage: 'Database: {driverName}'}, {driverName: config.SQLDriverName});
-            const databaseSchemaVersion = intl.formatMessage({id: 'settings.about.database.schema', defaultMessage: 'Database Schema Version: {version}'}, {version: config.SchemaVersion});
-            const copiedString = `${appVersion}\n${server}\n${database}\n${databaseSchemaVersion}`;
-            Clipboard.setString(copiedString);
-            showSnackBar({barType: SNACK_BAR_TYPE.INFO_COPIED, sourceScreen: componentId});
-        },
-        [intl, config],
-    );
+    });
 
     return (
         <SettingContainer testID='about'>
             <View style={styles.logoContainer}>
-               <Image
-                        source={require('@assets/images/logo.png')}
-                            style={{height: 180, resizeMode: 'contain',  alignItems: 'center',
-                            flex: 1,
-                            paddingRight: 15,
-                            paddingLeft: 15,
-                        }}
-                    />    
+                <CompassIcon
+                    color={theme.centerChannelColor}
+                    name='mattermost'
+                    size={88}
+                    testID='about.logo'
+                />
                 <Title
                     config={config}
                     license={license}
                 />
                 <Subtitle config={config}/>
-                <View
-                    style={styles.thinLine}
-                />
+                <SettingSeparator lineStyles={styles.lineStyles}/>
             </View>
-
             <View style={styles.infoContainer}>
                 <View style={styles.group}>
                     <Text
                         style={styles.leftHeading}
                         testID='about.app_version.title'
                     >
-                        {intl.formatMessage({id: 'settings.about.app.version.title', defaultMessage: 'App Version:'})}
+                        {intl.formatMessage({id: 'settings.about.version', defaultMessage: 'App Version:'})}
                     </Text>
                     <Text
                         style={styles.rightHeading}
                         testID='about.app_version.value'
                     >
-                        {intl.formatMessage({id: 'settings.about.app.version.value', defaultMessage: '{version} (Build {number})'},
+                        {intl.formatMessage({id: 'settings.about.build', defaultMessage: '{version} (Build {number})'},
                             {version: DeviceInfo.getVersion(), number: DeviceInfo.getBuildNumber()})}
                     </Text>
                 </View>
@@ -232,13 +208,13 @@ const About = ({componentId, config, license}: AboutProps) => {
                         style={styles.leftHeading}
                         testID='about.server_version.title'
                     >
-                        {intl.formatMessage({id: 'settings.about.server.version.title', defaultMessage: 'Server Version:'})}
+                        {intl.formatMessage({id: 'settings.about.server.version.desc', defaultMessage: 'Server Version:'})}
                     </Text>
                     <Text
                         style={styles.rightHeading}
                         testID='about.server_version.value'
                     >
-                        {serverVersion}
+                        {intl.formatMessage({id: serverVersion.id, defaultMessage: serverVersion.defaultMessage}, serverVersion.values)}
                     </Text>
                 </View>
                 <View style={styles.group}>
@@ -246,13 +222,13 @@ const About = ({componentId, config, license}: AboutProps) => {
                         style={styles.leftHeading}
                         testID='about.database.title'
                     >
-                        {intl.formatMessage({id: 'settings.about.database.title', defaultMessage: 'Database:'})}
+                        {intl.formatMessage({id: 'settings.about.database', defaultMessage: 'Database:'})}
                     </Text>
                     <Text
                         style={styles.rightHeading}
                         testID='about.database.value'
                     >
-                        {config.SQLDriverName}
+                        {intl.formatMessage({id: 'settings.about.database.value', defaultMessage: `${config.SQLDriverName}`})}
                     </Text>
                 </View>
                 <View style={styles.group}>
@@ -260,26 +236,18 @@ const About = ({componentId, config, license}: AboutProps) => {
                         style={styles.leftHeading}
                         testID='about.database_schema_version.title'
                     >
-                        {intl.formatMessage({id: 'settings.about.database.schema.title', defaultMessage: 'Database Schema Version:'})}
+                        {intl.formatMessage({id: 'settings.about.database.schema', defaultMessage: 'Database Schema Version:'})}
                     </Text>
                     <Text
                         style={styles.rightHeading}
                         testID='about.database_schema_version.value'
                     >
-                        {config.SchemaVersion}
+                        {intl.formatMessage({
+                            id: 'settings.about.database.schema.value',
+                            defaultMessage: `${config.SchemaVersion}`,
+                        })}
                     </Text>
                 </View>
-                <Button
-                    theme={theme}
-                    backgroundStyle={[buttonBackgroundStyle(theme, 'm', 'tertiary'), styles.copyInfoButtonContainer]}
-                    onPress={copyToClipboard}
-                    textStyle={buttonTextStyle(theme, 'm', 'tertiary', 'default')}
-                    text={intl.formatMessage({id: 'settings.about.button.copyInfo', defaultMessage: 'Copy info'})}
-                    testID={'about.copy_info'}
-                    iconName='content-copy'
-                    iconSize={15}
-                    buttonType={'default'}
-                />
                 {license.IsLicensed === 'true' && (
                     <View style={styles.licenseContainer}>
                         <FormattedText
@@ -304,9 +272,6 @@ const About = ({componentId, config, license}: AboutProps) => {
                         values={{site: config.SiteName}}
                     />
                 }
-                <View
-                    style={styles.thinLine}
-                />
                 <FormattedText
                     defaultMessage='Copyright 2015-{currentYear} Mattermost, Inc. All rights reserved'
                     id={t('settings.about.copyright')}
@@ -378,6 +343,18 @@ const About = ({componentId, config, license}: AboutProps) => {
                     </View>
                 </View>
                 <View style={{marginBottom: 20}}>
+                    <FormattedText
+                        defaultMessage='Build Date:'
+                        id={t('about.date')}
+                        style={styles.footerTitleText}
+                        testID='about.build_date.title'
+                    />
+                    <Text
+                        style={styles.footerText}
+                        testID='about.build_date.value'
+                    >
+                        {config.BuildDate}
+                    </Text>
                 </View>
             </View>
         </SettingContainer>

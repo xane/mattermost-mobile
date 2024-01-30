@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {type MutableRefObject, useCallback, useEffect, useRef} from 'react';
+import React, {MutableRefObject, useCallback, useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {Keyboard, Platform, useWindowDimensions, View} from 'react-native';
 import Button from 'react-native-button';
 
-import FloatingTextInput, {type FloatingTextInputRef} from '@components/floating_text_input_label';
+import FloatingTextInput, {FloatingTextInputRef} from '@components/floating_text_input_label';
 import FormattedText from '@components/formatted_text';
 import Loading from '@components/loading';
 import {useIsTablet} from '@hooks/device';
@@ -42,15 +42,18 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         paddingHorizontal: 20,
     },
     enterServer: {
-        marginBottom: 12,
+        marginBottom: 24,
     },
     fullWidth: {
         width: '100%',
     },
+    error: {
+        marginBottom: 18,
+    },
     chooseText: {
         alignSelf: 'flex-start',
         color: changeOpacity(theme.centerChannelColor, 0.64),
-        marginTop: 0,
+        marginTop: 8,
         ...typography('Body', 75, 'Regular'),
     },
     connectButton: {
@@ -163,7 +166,7 @@ const ServerForm = ({
 
     return (
         <View style={styles.formContainer}>
-            <View style={styles.fullWidth}>
+            <View style={[styles.fullWidth, urlError?.length ? styles.error : undefined]}>
                 <FloatingTextInput
                     autoCorrect={false}
                     autoCapitalize={'none'}
@@ -175,8 +178,8 @@ const ServerForm = ({
                     error={urlError}
                     keyboardType='url'
                     label={formatMessage({
-                        id: 'mobile.components.select_server_view.enterHost',
-                        defaultMessage: 'Enter Host',
+                        id: 'mobile.components.select_server_view.enterServerUrl',
+                        defaultMessage: 'Enter Server URL',
                     })}
                     onBlur={onBlur}
                     onChangeText={handleUrlTextChanged}
@@ -190,7 +193,7 @@ const ServerForm = ({
                     value={url}
                 />
             </View>
-            <View style={styles.fullWidth}>
+            <View style={[styles.fullWidth, displayNameError?.length ? styles.error : undefined]}>
                 <FloatingTextInput
                     autoCorrect={false}
                     autoCapitalize={'none'}
@@ -215,10 +218,11 @@ const ServerForm = ({
             {!displayNameError &&
             <FormattedText
                 defaultMessage={'Choose a display name for your server'}
-                id={'mobile.components.select_server_view.hostHelp'}
+                id={'mobile.components.select_server_view.displayHelp'}
                 style={styles.chooseText}
                 testID={'server_form.display_help'}
             />
+            }
             <Button
                 containerStyle={[styles.connectButton, styleButtonBackground]}
                 disabled={buttonDisabled}

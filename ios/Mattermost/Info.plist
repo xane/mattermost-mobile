@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>AppGroupIdentifier</key>
-	<string>group.com.platrum.chat</string>
+	<string>group.com.mattermost.rnbeta</string>
 	<key>BundleEntryFilename</key>
 	<string>index.js</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Platrum Chat</string>
+	<string>Mattermost Beta</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.platrum.chat</string>
+	<string>com.mattermost.rnbeta</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.12.0</string>
+	<string>2.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -32,12 +32,12 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>mattermost</string>
-				<string>mmauth</string>
+				<string>mmauthbeta</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>501</string>
+	<string>463</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -47,32 +47,42 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSAllowsLocalNetworking</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Enabling access to your media library means you can attach files from your media library to your messages in $(PRODUCT_NAME).</string>
+	<string>Let $(PRODUCT_NAME) access your Media files</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Enabling access to Bluetooth means we can synchronize content across your devices and clients.</string>
+	<string>Share post data across devices with $(PRODUCT_NAME)</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Enabling access to Bluetooth means we can connect to audio peripherals for calls, and synchronize content across your devices and clients.</string>
+	<string>Share post data across devices with $(PRODUCT_NAME)</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Share contacts within $(PRODUCT_NAME)</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Enabling access to your device cameras means you can take photos or videos and upload them to $(PRODUCT_NAME).</string>
+	<string>Take a photo or video and upload it to $(PRODUCT_NAME)</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Enabling access to your Face ID means we can restrict unauthorized users from accessing $(PRODUCT_NAME) on your device.</string>
+	<string>$(PRODUCT_NAME) uses Face ID to restrict unauthorized users from accessing the app.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Enabling access to your location data means we can add location metadata to pictures and videos you share in $(PRODUCT_NAME).</string>
+	<string>Send your current location to $(PRODUCT_NAME)</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Enabling access to your location data means we can add location metadata to pictures and videos you share in $(PRODUCT_NAME).</string>
+	<string>Send your current location to $(PRODUCT_NAME)</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Enabling access to your device's microphones means you can capture audio for calls or videos to share in $(PRODUCT_NAME).</string>
+	<string>Capture audio when making a call or recording a video to share within $(PRODUCT_NAME)</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Share your route in your $(PRODUCT_NAME) workspace</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Enabling write access to your photo library means you can save downloaded photos and videos from $(PRODUCT_NAME) to your device.</string>
+	<string>Save downloaded photos and videos from $(PRODUCT_NAME) to your device</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Enabling read access to your photo library means you can upload photos and videos from your device to $(PRODUCT_NAME).</string>
+	<string>Upload photos and videos from your device to $(PRODUCT_NAME)</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Enabling your device to send user data to Apple means you can send voice messages to $(PRODUCT_NAME).</string>
+	<string>Send voice messages to $(PRODUCT_NAME)</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>INSendMessageIntent</string>
