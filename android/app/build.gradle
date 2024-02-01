@@ -100,7 +100,7 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
-    namespace "com.platrum.chat"
+    namespace "com.mattermost.rnbeta"
 
     lintOptions {
         checkReleaseBuilds false
@@ -108,11 +108,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.platrum.chat"
+        applicationId "com.mattermost.rnbeta"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 501
-        versionName "2.12.0"
+        versionCode 505
+        versionName "2.13.0"
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }

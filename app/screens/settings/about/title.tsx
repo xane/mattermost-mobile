@@ -13,10 +13,9 @@ import {typography} from '@utils/typography';
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
     return {
         title: {
-            ...typography('Heading', 300, 'SemiBold'),
+            ...typography('Heading', 800, 'SemiBold'),
             color: theme.centerChannelColor,
             paddingHorizontal: 36,
-            textAlign: 'left',
         },
         spacerTop: {
             marginTop: 8,

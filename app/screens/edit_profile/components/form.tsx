@@ -93,15 +93,15 @@ const ProfileForm = ({
         return {
             firstName: {
                 ref: firstNameRef,
-                isDisabled: true,
+                isDisabled: (isSAMLOrLDAP(service) && lockedFirstName) || includesSsoService(service),
             },
             lastName: {
                 ref: lastNameRef,
-                isDisabled: true,
+                isDisabled: (isSAMLOrLDAP(service) && lockedLastName) || includesSsoService(service),
             },
             username: {
                 ref: usernameRef,
-                isDisabled: true,
+                isDisabled: service !== '',
             },
             email: {
                 ref: emailRef,
@@ -109,11 +109,11 @@ const ProfileForm = ({
             },
             nickname: {
                 ref: nicknameRef,
-                isDisabled: true,
+                isDisabled: isSAMLOrLDAP(service) && lockedNickname,
             },
             position: {
                 ref: positionRef,
-                isDisabled: true,
+                isDisabled: isSAMLOrLDAP(service) && lockedPosition,
             },
         };
     }, [lockedFirstName, lockedLastName, lockedNickname, lockedPosition, currentUser.authService]);
