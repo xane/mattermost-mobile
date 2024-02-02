@@ -1,7 +1,6 @@
 assets/override
 dist
 build-ios
-*.zip
 server.PID
 mattermost.keystore
 tmp/
