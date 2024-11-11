@@ -607,6 +607,10 @@ const Markdown = ({
         str = str.replace(/\+/g, '＋');
     }
 
+    if (str && str.indexOf('-') !== -1) {
+        str = str.replace(/-/g, '−');
+    }
+
     let ast = parser.parse(str);
 
     ast = combineTextNodes(ast);
