@@ -601,13 +601,7 @@ const Markdown = ({
 
     const parser = useRef(new Parser({urlFilter, minimumHashtagLength})).current;
     const renderer = useMemo(createRenderer, [theme, textStyles]);
-    let str = value.toString();
-
-    if (str && str.indexOf('+') !== -1) {
-        str = str.replace(/\+/g, '＋');
-    }
-
-    let ast = parser.parse(str);
+    let ast = parser.parse(value.toString());
 
     ast = combineTextNodes(ast);
     ast = addListItemIndices(ast);
