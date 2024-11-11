@@ -1,6 +1,6 @@
 {
-    "DefaultServerUrl": "",
-    "DefaultServerName": "",
+    "DefaultServerUrl": "https://6e7b6c4.platrum.ru/",
+    "DefaultServerName": "Platrum",
     "TestServerUrl": "http://localhost:8065",
     "AutoSelectServerUrl": false,
 
