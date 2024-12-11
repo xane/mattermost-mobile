@@ -604,7 +604,11 @@ const Markdown = ({
     let str = value.toString();
 
     if (str && str.indexOf('+') !== -1) {
-        str = str.replace(/\+/g, '＋');
+        str = str.replace(/\+/g, '&plus;');
+    }
+
+    if (str && str.indexOf('-') !== -1) {
+        str = str.replace(/-/g, '&minus;');
     }
 
     let ast = parser.parse(str);
